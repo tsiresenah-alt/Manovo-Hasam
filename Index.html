@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MADAPRO - Inscription & Tableau de bord</title>
+    <title>MADAPRO Social - Reseau Social</title>
     <style>
         * {
             box-sizing: border-box;
@@ -29,29 +29,31 @@
             position: relative;
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
-        .register-screen {
-            padding: 30px;
+        .screen {
+            padding: 25px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             flex: 1;
+            overflow-y: auto;
         }
-        h2.title {
+        .hidden { display: none !important; }
+        h2 {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             color: #38bdf8;
             font-size: 1.8rem;
         }
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             font-weight: 500;
             color: #cbd5e1;
+            font-size: 0.9rem;
         }
-        input {
+        input, textarea {
             width: 100%;
             padding: 12px;
             background: #1e293b;
@@ -61,233 +63,56 @@
             font-size: 1rem;
             outline: none;
         }
-        input:focus {
+        input:focus, textarea:focus {
             border-color: #38bdf8;
         }
-        .operators {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .operator-card {
-            border: 2px solid #334155;
-            border-radius: 8px;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-        .operator-card.mvola { color: #facc15; border-color: #eab308; }
-        .operator-card.orange { color: #fb923c; border-color: #f97316; }
-        .operator-card.airtel { color: #f87171; border-color: #ef4444; }
-        .operator-card.selected {
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
-        }
-        button.submit-btn {
+        button {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             background: linear-gradient(135deg, #0284c7, #0369a1);
             border: none;
             border-radius: 8px;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-        }
-        .hidden { display: none !important; }
-        
-        /* Dashboard & Sections */
-        .app-screen {
-            background: linear-gradient(180deg, #1d4ed8 0%, #0f172a 35%);
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding-bottom: 70px;
-        }
-        .dash-header {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: #fbbf24;
-        }
-        .header-icons {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-        .icon-btn {
-            background: rgba(255,255,255,0.15);
-            border: none;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            cursor: pointer;
-            font-size: 1.1rem;
-        }
-        .user-welcome {
-            padding: 0 20px 15px 20px;
-        }
-        .user-welcome p {
-            color: #93c5fd;
-            font-size: 0.95rem;
-        }
-        .user-welcome h1 {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: white;
-            margin: 3px 0 10px 0;
-        }
-        .id-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #e2e8f0;
-        }
-        .id-badge span { color: #facc15; font-weight: bold; }
-        
-        .dash-content {
-            background: #0f172a;
-            border-top-left-radius: 24px;
-            border-top-right-radius: 24px;
-            padding: 20px;
-            flex: 1;
             margin-top: 10px;
-            overflow-y: auto;
         }
-        .solde-card {
-            background: white;
-            color: #0f172a;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        /* Fil d'actualité / Feed */
+        .feed-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #334155;
+            margin-bottom: 15px;
         }
-        .solde-card .label { font-size: 0.9rem; color: #64748b; margin-bottom: 5px; }
-        .solde-card .amount { font-size: 1.8rem; font-weight: bold; color: #0f172a; }
-        .solde-icon {
-            background: #1e40af;
-            color: white;
-            width: 48px;
-            height: 48px;
+        .post-box {
+            background: #1e293b;
             border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        .stat-card { padding: 18px; border-radius: 16px; color: white; }
-        .stat-card.vip { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        .stat-card.status { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
-        .stat-card .st-title { font-size: 0.85rem; opacity: 0.9; margin-bottom: 8px; }
-        .stat-card .st-value { font-size: 1.5rem; font-weight: bold; }
-        .actions-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-        .action-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-        .action-circle {
-            width: 55px;
-            height: 55px;
-            border-radius: 16px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 1.3rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
-        .action-circle.depot { background: #10b981; }
-        .action-circle.retrait { background: #3b82f6; }
-        .action-circle.aide { background: #f97316; }
-        .action-circle.equipe { background: #8b5cf6; }
-        .action-item span { font-size: 0.8rem; color: #cbd5e1; font-weight: 500; }
-        
-        .task-section {
-            background: #1e293b;
-            border-radius: 16px;
-            padding: 20px;
+            padding: 15px;
+            margin-bottom: 15px;
             border: 1px solid #334155;
         }
-        .task-title { font-size: 1rem; font-weight: bold; color: #fbbf24; margin-bottom: 12px; }
-        .task-body { text-align: center; padding: 15px 0; }
-        .task-body .fa-icon { font-size: 2.2rem; margin-bottom: 8px; }
-        .task-body p { color: #94a3b8; font-size: 0.85rem; line-height: 1.4; }
-
-        /* Pejy Équipe & Parrainage */
-        .team-box {
-            background: #1e293b;
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid #334155;
-            margin-bottom: 20px;
-        }
-        .team-box h3 {
-            color: #38bdf8;
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-        }
-        .input-copy-group {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-        }
-        .input-copy-group input {
-            background: #0f172a;
-            border: 1px solid #334155;
-            padding: 10px;
-            border-radius: 8px;
-            color: #f8fafc;
-            font-size: 0.9rem;
-            flex: 1;
-            outline: none;
-        }
-        .copy-btn {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 0 15px;
-            border-radius: 8px;
+        .post-author {
             font-weight: bold;
+            color: #38bdf8;
+            margin-bottom: 5px;
+        }
+        .post-content {
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            margin-bottom: 10px;
+        }
+        .post-actions {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85rem;
+            color: #94a3b8;
             cursor: pointer;
         }
-        .copy-btn:hover { background: #1d4ed8; }
-
+        .post-actions span:hover { color: #38bdf8; }
+        
         /* Navbar bas */
         .bottom-nav {
             position: fixed;
@@ -308,10 +133,9 @@
             flex-direction: column;
             align-items: center;
             color: #64748b;
-            text-decoration: none;
             font-size: 0.75rem;
-            gap: 4px;
             cursor: pointer;
+            gap: 4px;
         }
         .nav-item.active { color: #38bdf8; }
     </style>
@@ -320,38 +144,126 @@
 
     <div class="container">
         <!-- PEJY 1: FISORATANA ANARANA -->
-        <div id="registerScreen" class="register-screen">
-            <h2 class="title">MADAPRO</h2>
-            <form id="signupForm" onsubmit="handleSubmit(event)">
+        <div id="authScreen" class="screen">
+            <h2>MADAPRO Social</h2>
+            <form onsubmit="handleLogin(event)">
                 <div class="form-group">
-                    <label for="fullname">Anarana sy Fanampiny (Nom)</label>
-                    <input type="text" id="fullname" required placeholder="Ohatra: Hasambarana">
+                    <label>Anarana (Nom d'utilisateur)</label>
+                    <input type="text" id="username" required placeholder="Ohatra: Hasam">
                 </div>
-
                 <div class="form-group">
-                    <label for="email">Mailaka (Email)</label>
-                    <input type="email" id="email" required placeholder="oh@gmail.com">
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Teny miafina (Mot de passe)</label>
+                    <label>Teny miafina (Mot de passe)</label>
                     <input type="password" id="password" required placeholder="••••••••">
                 </div>
+                <button type="submit">Miditra / Hisoratra anarana</button>
+            </form>
+        </div>
 
-                <div class="form-group">
-                    <label>Safidio ny Mobile Money</label>
-                    <div class="operators">
-                        <div class="operator-card mvola" onclick="selectOperator('MVola', this)">MVola</div>
-                        <div class="operator-card orange" onclick="selectOperator('Orange', this)">Orange Money</div>
-                        <div class="operator-card airtel" onclick="selectOperator('Airtel', this)">Airtel Money</div>
+        <!-- PEJY 2: FIL D'ACTUALITÉ (ACCUEIL) -->
+        <div id="feedScreen" class="screen hidden" style="padding-bottom: 80px;">
+            <div class="feed-header">
+                <h3>📢 Hafatra & Vaovao</h3>
+                <button style="width: auto; padding: 6px 12px; font-size: 0.8rem;" onclick="logout()">Hivoaka</button>
+            </div>
+
+            <!-- Fanaovana Post Vaovao -->
+            <div class="post-box">
+                <label style="margin-bottom: 8px;">Inona no ao an-tsainao androany?</label>
+                <textarea id="postText" rows="3" placeholder="Soraty eto ny hevitrao..."></textarea>
+                <button onclick="createPost()">Mamoaka (Publier)</button>
+            </div>
+
+            <!-- Lisitry ny Post -->
+            <div id="postsContainer">
+                <div class="post-box">
+                    <div class="post-author">Admin Madapro</div>
+                    <div class="post-content">Tongasoa eto amin'ny tambajotra sosialy vaovao ho an'i Madagasikara! Afaka mizara hevitra eto ianao.</div>
+                    <div class="post-actions">
+                        <span>❤️ 12 Jereo</span>
+                        <span>💬 3 Hevitra</span>
                     </div>
-                    <input type="hidden" id="selectedOperator" required>
                 </div>
+            </div>
+        </div>
 
-                <div class="form-group">
-                    <label for="phone">Laharana finday handefasana ny vola</label>
-                    <input type="tel" id="phone" required placeholder="034 00 000 00">
+        <!-- PEJY 3: PROFILE / FITAOVANA -->
+        <div id="profileScreen" class="screen hidden" style="padding-bottom: 80px;">
+            <h2>👤 Mombamomba Anao</h2>
+            <div class="post-box">
+                <p><strong>Anarana:</strong> <span id="profileName">Hasam</span></p>
+                <p style="margin-top: 8px;"><strong>ID:</strong> MDP884210</p>
+                <p style="margin-top: 8px;"><strong>Statut:</strong> Mpikambana Mavitrika</p>
+            </div>
+            <button onclick="alert('Vonona ny hanao téléchargement (APK/PWA) amin\'ny manaraka!')">📥 Ampakatra App (Installer)</button>
+        </div>
+
+        <!-- NAVBAR BAS -->
+        <div class="bottom-nav hidden" id="bottomNav">
+            <div class="nav-item active" id="navHome" onclick="switchTab('feed')">
+                <span>🏠</span>
+                <span>Accueil</span>
+            </div>
+            <div class="nav-item" id="navProfile" onclick="switchTab('profile')">
+                <span>👤</span>
+                <span>Profil</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = "";
+
+        function handleLogin(event) {
+            event.preventDefault();
+            currentUser = document.getElementById('username').value;
+            if(!currentUser) return;
+
+            document.getElementById('authScreen').classList.add('hidden');
+            document.getElementById('feedScreen').classList.remove('hidden');
+            document.getElementById('bottomNav').classList.remove('hidden');
+            document.getElementById('profileName').innerText = currentUser;
+        }
+
+        function createPost() {
+            const text = document.getElementById('postText').value;
+            if(!text.trim()) return;
+
+            const container = document.getElementById('postsContainer');
+            const newPost = document.createElement('div');
+            newPost.className = 'post-box';
+            newPost.innerHTML = `
+                <div class="post-author">${currentUser}</div>
+                <div class="post-content">${text}</div>
+                <div class="post-actions">
+                    <span>❤️ 0 Jereo</span>
+                    <span>💬 0 Hevitra</span>
                 </div>
+            `;
+            container.prepend(newPost);
+            document.getElementById('postText').value = '';
+        }
 
-                <button type="submit" class="submit-btn">Hisoratra anarana
-                    
+        function switchTab(tab) {
+            if(tab === 'feed') {
+                document.getElementById('feedScreen').classList.remove('hidden');
+                document.getElementById('profileScreen').classList.add('hidden');
+                document.getElementById('navHome').classList.add('active');
+                document.getElementById('navProfile').classList.remove('active');
+            } else {
+                document.getElementById('profileScreen').classList.remove('hidden');
+                document.getElementById('feedScreen').classList.add('hidden');
+                document.getElementById('navProfile').classList.add('active');
+                document.getElementById('navHome').classList.remove('active');
+            }
+        }
+
+        function logout() {
+            currentUser = "";
+            document.getElementById('feedScreen').classList.add('hidden');
+            document.getElementById('profileScreen').classList.add('hidden');
+            document.getElementById('bottomNav').classList.add('hidden');
+            document.getElementById('authScreen').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
