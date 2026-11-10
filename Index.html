@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Madapro - Inscription & Tableau de bord</title>
+    <title>MADAPRO - Inscription & Tableau de bord</title>
     <style>
         * {
             box-sizing: border-box;
@@ -99,7 +99,7 @@
             cursor: pointer;
         }
 
-        /* Style Tableau de bord (Alpha Plus Style) */
+        /* Style Tableau de bord (MADAPRO Style) */
         .hidden { display: none !important; }
         .dashboard-screen {
             background: linear-gradient(180deg, #1d4ed8 0%, #0f172a 35%);
@@ -317,9 +317,6 @@
         .nav-item.active {
             color: #38bdf8;
         }
-        .nav-item span-icon {
-            font-size: 1.2rem;
-        }
     </style>
 </head>
 <body>
@@ -327,7 +324,7 @@
     <div class="container">
         <!-- PEJY 1: FISORATANA ANARANA -->
         <div id="registerScreen" class="register-screen">
-            <h2 class="title">ALPHA PLUS</h2>
+            <h2 class="title">MADAPRO</h2>
             <form id="signupForm" onsubmit="handleSubmit(event)">
                 <div class="form-group">
                     <label for="fullname">Anarana sy Fanampiny (Nom)</label>
@@ -363,10 +360,10 @@
             </form>
         </div>
 
-        <!-- PEJY 2: TABLEAU DE BORD (ALPHA PLUS STYLE) -->
+        <!-- PEJY 2: TABLEAU DE BORD (MADAPRO STYLE) -->
         <div id="dashboardScreen" class="dashboard-screen hidden">
             <div class="dash-header">
-                <div class="brand">👑 ALPHA PLUS</div>
+                <div class="brand">👑 MADAPRO</div>
                 <div class="header-icons">
                     <button class="icon-btn" onclick="alert('Tsy misy fampandrenesana vaovao')">🔔</button>
                     <button class="icon-btn" onclick="logout()" title="Déconnexion">🚪</button>
@@ -377,7 +374,7 @@
                 <p>Bienvenue,</p>
                 <h1 id="displayName">Hasambarana</h1>
                 <div class="id-badge">
-                    ID: <span id="displayId">APB64918AE</span> 📋
+                    ID: <span id="displayId">MDP624084AE</span> 📋
                 </div>
             </div>
 
@@ -474,8 +471,8 @@
             document.getElementById('displayName').innerText = name;
             document.getElementById('displaySolde').innerText = "2 000 AR";
 
-            // Manaova ID kisendrasendra
-            const randomId = 'APB' + Math.floor(100000 + Math.random() * 900000) + 'AE';
+            // Manaova ID miaraka amin'ny MDP
+            const randomId = 'MDP' + Math.floor(100000 + Math.random() * 900000) + 'AE';
             document.getElementById('displayId').innerText = randomId;
 
             // Afeno ny fisoratana anarana, asehoy ny dashboard
