@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription & Paiement Mobile Money</title>
+    <title>Madapro - Inscription & Tableau de bord</title>
     <style>
         * {
             box-sizing: border-box;
@@ -12,25 +12,32 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
+            background: #0f172a;
             color: #f8fafc;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
         }
         .container {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 16px;
             width: 100%;
-            max-width: 450px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            max-width: 480px;
+            background: #0f172a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
-        h2 {
+        /* Style Pejy Fisoratana Anarana */
+        .register-screen {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+        }
+        h2.title {
             text-align: center;
             margin-bottom: 25px;
             color: #38bdf8;
@@ -45,18 +52,17 @@
             font-weight: 500;
             color: #cbd5e1;
         }
-        input, select {
+        input {
             width: 100%;
             padding: 12px;
-            background: #0f172a;
+            background: #1e293b;
             border: 1px solid #334155;
             border-radius: 8px;
             color: white;
             font-size: 1rem;
             outline: none;
-            transition: border-color 0.3s;
         }
-        input:focus, select:focus {
+        input:focus {
             border-color: #38bdf8;
         }
         .operators {
@@ -71,20 +77,17 @@
             padding: 10px;
             text-align: center;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: bold;
-            transition: all 0.3s;
         }
         .operator-card.mvola { color: #facc15; border-color: #eab308; }
         .operator-card.orange { color: #fb923c; border-color: #f97316; }
         .operator-card.airtel { color: #f87171; border-color: #ef4444; }
-        
         .operator-card.selected {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
         }
-        
-        button {
+        button.submit-btn {
             width: 100%;
             padding: 14px;
             background: linear-gradient(135deg, #0284c7, #0369a1);
@@ -94,51 +97,228 @@
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: opacity 0.3s;
         }
-        button:hover {
-            opacity: 0.9;
+
+        /* Style Tableau de bord (Alpha Plus Style) */
+        .hidden { display: none !important; }
+        .dashboard-screen {
+            background: linear-gradient(180deg, #1d4ed8 0%, #0f172a 35%);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 70px;
         }
-        .note {
-            font-size: 0.8rem;
-            color: #94a3b8;
-            text-align: center;
-            margin-top: 15px;
-        }
-        
-        /* Fizarana ho an'ny Pejy Manaraka (Dashboard) */
-        .hidden {
-            display: none;
-        }
-        .dashboard {
-            text-align: center;
-        }
-        .welcome-title {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            color: #38bdf8;
-        }
-        .card-info {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 12px;
+        .dash-header {
             padding: 20px;
-            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .card-info h3 {
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #fbbf24;
+        }
+        .header-icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .icon-btn {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        .user-welcome {
+            padding: 0 20px 15px 20px;
+        }
+        .user-welcome p {
+            color: #93c5fd;
+            font-size: 0.95rem;
+        }
+        .user-welcome h1 {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: white;
+            margin: 3px 0 10px 0;
+        }
+        .id-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+        }
+        .id-badge span { color: #facc15; font-weight: bold; }
+        
+        .dash-content {
+            background: #0f172a;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            padding: 20px;
+            flex: 1;
+            margin-top: 10px;
+        }
+        .solde-card {
+            background: white;
+            color: #0f172a;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .solde-card .label {
             font-size: 0.9rem;
-            color: #94a3b8;
+            color: #64748b;
             margin-bottom: 5px;
         }
-        .card-info .amount {
+        .solde-card .amount {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #22c55e;
+            color: #0f172a;
         }
-        .card-info .bonus {
-            font-size: 1.8rem;
+        .solde-icon {
+            background: #1e40af;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            padding: 18px;
+            border-radius: 16px;
+            color: white;
+        }
+        .stat-card.vip {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        .stat-card.status {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        }
+        .stat-card .st-title {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        .stat-card .st-value {
+            font-size: 1.5rem;
             font-weight: bold;
-            color: #facc15;
+        }
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .action-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .action-circle {
+            width: 55px;
+            height: 55px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .action-circle.depot { background: #10b981; }
+        .action-circle.retrait { background: #3b82f6; }
+        .action-circle.aide { background: #f97316; }
+        .action-circle.equipe { background: #8b5cf6; }
+        .action-item span {
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+        .task-section {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #334155;
+        }
+        .task-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fbbf24;
+            margin-bottom: 12px;
+        }
+        .task-body {
+            text-align: center;
+            padding: 15px 0;
+        }
+        .task-body .fa-icon {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+        .task-body p {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+        /* Navbar bas */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: #1e293b;
+            border-top: 1px solid #334155;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.75rem;
+            gap: 4px;
+            cursor: pointer;
+        }
+        .nav-item.active {
+            color: #38bdf8;
+        }
+        .nav-item span-icon {
+            font-size: 1.2rem;
         }
     </style>
 </head>
@@ -146,8 +326,8 @@
 
     <div class="container">
         <!-- PEJY 1: FISORATANA ANARANA -->
-        <div id="registerSection">
-            <h2>Inscription & Accès</h2>
+        <div id="registerScreen" class="register-screen">
+            <h2 class="title">ALPHA PLUS</h2>
             <form id="signupForm" onsubmit="handleSubmit(event)">
                 <div class="form-group">
                     <label for="fullname">Anarana sy Fanampiny (Nom)</label>
@@ -179,26 +359,95 @@
                     <input type="tel" id="phone" required placeholder="034 00 000 00">
                 </div>
 
-                <button type="submit">Hisoratra anarana sy Handoa</button>
+                <button type="submit" class="submit-btn">Hisoratra anarana sy Handoa</button>
             </form>
-            <div class="note" id="statusMessage">Aoka ho azo antoka fa marina ny laharanao.</div>
         </div>
 
-        <!-- PEJY 2: TAFAFIDITRA (DASHBOARD) -->
-        <div id="dashboardSection" class="hidden dashboard">
-            <h2 class="welcome-title">Mba tafiditra soa aman-tsara ianao, <span id="displayName" style="color: white;"></span> !</h2>
-            
-            <div class="card-info">
-                <h3>Solde misy anao</h3>
-                <div class="amount">0 Ar</div>
+        <!-- PEJY 2: TABLEAU DE BORD (ALPHA PLUS STYLE) -->
+        <div id="dashboardScreen" class="dashboard-screen hidden">
+            <div class="dash-header">
+                <div class="brand">👑 ALPHA PLUS</div>
+                <div class="header-icons">
+                    <button class="icon-btn" onclick="alert('Tsy misy fampandrenesana vaovao')">🔔</button>
+                    <button class="icon-btn" onclick="logout()" title="Déconnexion">🚪</button>
+                </div>
             </div>
 
-            <div class="card-info">
-                <h3>Bonus Fisoratana Anarana</h3>
-                <div class="bonus">2 000 Ar</div>
+            <div class="user-welcome">
+                <p>Bienvenue,</p>
+                <h1 id="displayName">Hasambarana</h1>
+                <div class="id-badge">
+                    ID: <span id="displayId">APB64918AE</span> 📋
+                </div>
             </div>
 
-            <button onclick="logout()">Hivoaka (Déconnexion)</button>
+            <div class="dash-content">
+                <div class="solde-card">
+                    <div>
+                        <div class="label">Mon solde disponible</div>
+                        <div class="amount" id="displaySolde">2 000 AR</div>
+                    </div>
+                    <div class="solde-icon">💳</div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card vip">
+                        <div class="st-title">👑 Mon VIP</div>
+                        <div class="st-value">VIP1</div>
+                    </div>
+                    <div class="stat-card status">
+                        <div class="st-title">📈 Mon statut</div>
+                        <div class="st-value">Actif</div>
+                    </div>
+                </div>
+
+                <div class="actions-grid">
+                    <div class="action-item" onclick="alert('Manao Dépôt')">
+                        <div class="action-circle depot">⬇</div>
+                        <span>Dépôt</span>
+                    </div>
+                    <div class="action-item" onclick="alert('Manao Retrait')">
+                        <div class="action-circle retrait">⬆</div>
+                        <span>Retrait</span>
+                    </div>
+                    <div class="action-item" onclick="alert('Mifanerasera amin ny Aide')">
+                        <div class="action-circle aide">❓</div>
+                        <span>Aide</span>
+                    </div>
+                    <div class="action-item" onclick="alert('Hijery ny Équipe')">
+                        <div class="action-circle equipe">👥</div>
+                        <span>Équipe</span>
+                    </div>
+                </div>
+
+                <div class="task-section">
+                    <div class="task-title">⚡ Tâche quotidienne</div>
+                    <div class="task-body">
+                        <div class="fa-icon">👑</div>
+                        <p>Activez un VIP pour accéder à la tâche quotidienne et recevoir une récompense.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navbar bas -->
+            <div class="bottom-nav">
+                <div class="nav-item active">
+                    <span>🏠</span>
+                    <span>Accueil</span>
+                </div>
+                <div class="nav-item" onclick="alert('Plan VIP')">
+                    <span>👑</span>
+                    <span>Plan</span>
+                </div>
+                <div class="nav-item" onclick="alert('Équipe')">
+                    <span>👥</span>
+                    <span>Équipe</span>
+                </div>
+                <div class="nav-item" onclick="logout()">
+                    <span>👤</span>
+                    <span>Profil</span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -215,28 +464,31 @@
         function handleSubmit(event) {
             event.preventDefault();
             const name = document.getElementById('fullname').value;
-            const phone = document.getElementById('phone').value;
             
             if (!chosenOperator) {
                 alert("Safidio azafady ny Mpandray Mobile Money (MVola, Orange na Airtel).");
                 return;
             }
 
-            // Asehoy ny anarana ao amin'ny pejy manaraka
+            // Asehoy ny anarana sy ny solde bonus 2 000 Ar
             document.getElementById('displayName').innerText = name;
+            document.getElementById('displaySolde').innerText = "2 000 AR";
 
-            // Afeno ny pejy fisoratana anarana ary asehoy ny dashboard
-            document.getElementById('registerSection').classList.add('hidden');
-            document.getElementById('dashboardSection').classList.remove('hidden');
+            // Manaova ID kisendrasendra
+            const randomId = 'APB' + Math.floor(100000 + Math.random() * 900000) + 'AE';
+            document.getElementById('displayId').innerText = randomId;
+
+            // Afeno ny fisoratana anarana, asehoy ny dashboard
+            document.getElementById('registerScreen').classList.add('hidden');
+            document.getElementById('dashboardScreen').classList.remove('hidden');
         }
 
         function logout() {
-            // Miverina amin'ny pejy voalohany
             document.getElementById('signupForm').reset();
             document.querySelectorAll('.operator-card').forEach(card => card.classList.remove('selected'));
             chosenOperator = '';
-            document.getElementById('dashboardSection').classList.add('hidden');
-            document.getElementById('registerSection').classList.remove('hidden');
+            document.getElementById('dashboardScreen').classList.add('hidden');
+            document.getElementById('registerScreen').classList.remove('hidden');
         }
     </script>
 </body>
