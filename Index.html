@@ -105,46 +105,101 @@
             text-align: center;
             margin-top: 15px;
         }
+        
+        /* Fizarana ho an'ny Pejy Manaraka (Dashboard) */
+        .hidden {
+            display: none;
+        }
+        .dashboard {
+            text-align: center;
+        }
+        .welcome-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #38bdf8;
+        }
+        .card-info {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .card-info h3 {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+        .card-info .amount {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #22c55e;
+        }
+        .card-info .bonus {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #facc15;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h2>Inscription & Accès</h2>
-        <form id="signupForm" onsubmit="handleSubmit(event)">
-            <div class="form-group">
-                <label for="fullname">Anarana sy Fanampiny (Nom)</label>
-                <input type="text" id="fullname" required placeholder="Ohatra: Hasambarana">
-            </div>
-
-            <div class="form-group">
-                <label for="email">Mailaka (Email)</label>
-                <input type="email" id="email" required placeholder="oh@gmail.com">
-            </div>
-
-            <div class="form-group">
-                <label for="password">Teny miafina (Mot de passe)</label>
-                <input type="password" id="password" required placeholder="••••••••">
-            </div>
-
-            <div class="form-group">
-                <label>Safidio ny Mobile Money</label>
-                <div class="operators">
-                    <div class="operator-card mvola" onclick="selectOperator('MVola', this)">MVola</div>
-                    <div class="operator-card orange" onclick="selectOperator('Orange', this)">Orange Money</div>
-                    <div class="operator-card airtel" onclick="selectOperator('Airtel', this)">Airtel Money</div>
+        <!-- PEJY 1: FISORATANA ANARANA -->
+        <div id="registerSection">
+            <h2>Inscription & Accès</h2>
+            <form id="signupForm" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="fullname">Anarana sy Fanampiny (Nom)</label>
+                    <input type="text" id="fullname" required placeholder="Ohatra: Hasambarana">
                 </div>
-                <input type="hidden" id="selectedOperator" required>
+
+                <div class="form-group">
+                    <label for="email">Mailaka (Email)</label>
+                    <input type="email" id="email" required placeholder="oh@gmail.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Teny miafina (Mot de passe)</label>
+                    <input type="password" id="password" required placeholder="••••••••">
+                </div>
+
+                <div class="form-group">
+                    <label>Safidio ny Mobile Money</label>
+                    <div class="operators">
+                        <div class="operator-card mvola" onclick="selectOperator('MVola', this)">MVola</div>
+                        <div class="operator-card orange" onclick="selectOperator('Orange', this)">Orange Money</div>
+                        <div class="operator-card airtel" onclick="selectOperator('Airtel', this)">Airtel Money</div>
+                    </div>
+                    <input type="hidden" id="selectedOperator" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Laharana finday handefasana ny vola</label>
+                    <input type="tel" id="phone" required placeholder="034 00 000 00">
+                </div>
+
+                <button type="submit">Hisoratra anarana sy Handoa</button>
+            </form>
+            <div class="note" id="statusMessage">Aoka ho azo antoka fa marina ny laharanao.</div>
+        </div>
+
+        <!-- PEJY 2: TAFAFIDITRA (DASHBOARD) -->
+        <div id="dashboardSection" class="hidden dashboard">
+            <h2 class="welcome-title">Mba tafiditra soa aman-tsara ianao, <span id="displayName" style="color: white;"></span> !</h2>
+            
+            <div class="card-info">
+                <h3>Solde misy anao</h3>
+                <div class="amount">0 Ar</div>
             </div>
 
-            <div class="form-group">
-                <label for="phone">Laharana finday handefasana ny vola</label>
-                <input type="tel" id="phone" required placeholder="034 00 000 00">
+            <div class="card-info">
+                <h3>Bonus Fisoratana Anarana</h3>
+                <div class="bonus">2 000 Ar</div>
             </div>
 
-            <button type="submit">Hisoratra anarana sy Handoa</button>
-        </form>
-        <div class="note" id="statusMessage">Aoka ho azo antoka fa marina ny laharanao.</div>
+            <button onclick="logout()">Hivoaka (Déconnexion)</button>
+        </div>
     </div>
 
     <script>
@@ -167,13 +222,21 @@
                 return;
             }
 
-            document.getElementById('statusMessage').innerText = `Misaotra anao ${name}! Mandefa fangatahana amin'ny ${chosenOperator} (${phone})...`;
-            document.getElementById('statusMessage').style.color = '#38bdf8';
-            
-            // Eto no azonao ampifandraisana amin'ny API fandoavam-bola na fandefasana anaty Base de données (Firebase/Telegram bot)
-            setTimeout(() => {
-                alert("Tafiditra soa aman-tsara! Jereo ny findainao hamitana ny fandoavam-bola.");
-            }, 1500);
+            // Asehoy ny anarana ao amin'ny pejy manaraka
+            document.getElementById('displayName').innerText = name;
+
+            // Afeno ny pejy fisoratana anarana ary asehoy ny dashboard
+            document.getElementById('registerSection').classList.add('hidden');
+            document.getElementById('dashboardSection').classList.remove('hidden');
+        }
+
+        function logout() {
+            // Miverina amin'ny pejy voalohany
+            document.getElementById('signupForm').reset();
+            document.querySelectorAll('.operator-card').forEach(card => card.classList.remove('selected'));
+            chosenOperator = '';
+            document.getElementById('dashboardSection').classList.add('hidden');
+            document.getElementById('registerSection').classList.remove('hidden');
         }
     </script>
 </body>
