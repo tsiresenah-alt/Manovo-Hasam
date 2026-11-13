@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plateforme de Travail en Ligne & Revenus Quotidiens</title>
+    <!-- Tailwind CSS pour un design moderne -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 flex justify-between items-center shadow-md">
+        <div class="flex items-center space-x-3">
+            <div class="bg-indigo-600 p-2 rounded-lg text-white font-bold text-xl"><i class="fa-solid fa-chart-line"></i></div>
+            <span class="text-xl font-bold tracking-wide">WorkEarn Pro</span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span class="text-sm bg-slate-700 px-3 py-1 rounded-full text-emerald-400 font-medium">
+                <i class="fa-solid fa-circle text-xs mr-1 animate-pulse"></i> Actif
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
+        
+        <!-- Welcome Banner -->
+        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 mb-8 shadow-xl flex flex-col md:flex-row justify-between items-center">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-extrabold mb-2">Tableau de Bord des Revenus</h1>
+                <p class="text-indigo-100 text-sm md:text-base">Gérez vos tâches en ligne et suivez vos gains automatiques générés chaque jour.</p>
+            </div>
+            <div class="mt-4 md:mt-0 bg-white/10 backdrop-blur-md px-6 py-4 rounded-xl border border-white/20 text-center">
+                <span class="block text-xs uppercase tracking-wider text-indigo-200">Solde Total</span>
+                <span id="total-balance" class="text-3xl font-black text-emerald-300">0.00 Ar</span>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-slate-800 border border-slate-700 p-6 rounded-xl shadow-lg">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-slate-400 font-medium">Revenu Quotidien Automatique</h3>
+                    <i class="fa-solid fa-coins text-yellow-400 text-xl"></i>
+                </div>
+                <p id="daily-income" class="text-2xl font-bold">1,500 Ar / jour</p>
+                <span class="text-xs text-emerald-400 mt-2 block"><i class="fa-solid fa-arrow-up"></i> Génération en cours</span>
+            </div>
+
+            <div class="bg-slate-800 border border-slate-700 p-6 rounded-xl shadow-lg">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-slate-400 font-medium">Tâches Complétées</h3>
+                    <i class="fa-solid fa-list-check text-indigo-400 text-xl"></i>
+                </div>
+                <p id="tasks-count" class="text-2xl font-bold">0</p>
+                <span class="text-xs text-slate-400 mt-2 block">Disponibles aujourd'hui</span>
+            </div>
+
+            <div class="bg-slate-800 border border-slate-700 p-6 rounded-xl shadow-lg">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-slate-400 font-medium">Statut du Compte</h3>
+                    <i class="fa-solid fa-shield-halved text-emerald-400 text-xl"></i>
+                </div>
+                <p class="text-2xl font-bold text-emerald-400">Standard VIP</p>
+                <span class="text-xs text-slate-400 mt-2 block">Vérifié & Sécurisé</span>
+            </div>
+        </div>
+
+        <!-- Actions / Tasks Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Section Tâches en Ligne -->
+            <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg">
+                <h2 class="text-lg font-bold mb-4 flex items-center"><i class="fa-solid fa-laptop-code text-indigo-400 mr-2"></i> Tâches de Travail en Ligne</h2>
+                <div class="space-y-4">
+                    <div class="bg-slate-700
+                      
