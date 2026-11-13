@@ -3,76 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plateforme de Travail en Ligne & Revenus Quotidiens</title>
-    <!-- Tailwind CSS pour un design moderne -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>WorkEarn Pro</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            padding: 16px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-box {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            padding: 10px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .badge-actif {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .card-main {
+            background: linear-gradient(135deg, #4f46e5, #9333ea);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 10px 25px rgba(147, 51, 234, 0.3);
+        }
+        .card-main h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        .card-main p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        .solde-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+        .solde-box span {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+        .solde-box h3 {
+            font-size: 28px;
+            color: #34d399;
+            margin-top: 5px;
+        }
+        .card-item {
+            background-color: #1e293b;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .card-item:active {
+            transform: scale(0.98);
+            background-color: #334155;
+        }
+        .card-item h4 {
+            font-size: 16px;
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
+        .card-item .value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .card-item .sub-text {
+            font-size: 13px;
+            color: #34d399;
+            margin-top: 6px;
+        }
+        /* Style pour le clignotement du texte */
+        .blinking-text {
+            animation: blink 1s infinite;
+            color: #f87171;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+            background: rgba(248, 113, 113, 0.1);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(248, 113, 113, 0.3);
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.2; }
+            100% { opacity: 1; }
+        }
+        .btn-back {
+            background-color: #334155;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .view {
+            display: none;
+        }
+        .view.active {
+            display: block;
+        }
+    </style>
 </head>
-<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col">
+<body>
 
-    <!-- Header -->
-    <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 flex justify-between items-center shadow-md">
-        <div class="flex items-center space-x-3">
-            <div class="bg-indigo-600 p-2 rounded-lg text-white font-bold text-xl"><i class="fa-solid fa-chart-line"></i></div>
-            <span class="text-xl font-bold tracking-wide">WorkEarn Pro</span>
+    <!-- VUE 1 : TABLEAU DE BORD PRINCIPAL -->
+    <div id="main-view" class="view active">
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo-box">📊</div>
+                <h2>WorkEarn Pro</h2>
+            </div>
+            <div class="badge-actif">Actif</div>
         </div>
-        <div class="flex items-center space-x-4">
-            <span class="text-sm bg-slate-700 px-3 py-1 rounded-full text-emerald-400 font-medium">
-                <i class="fa-solid fa-circle text-xs mr-1 animate-pulse"></i> Actif
-            </span>
-        </div>
-    </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
+        <!-- Carte Principale -->
+        <div class="card-main">
+            <h2>Tableau de Bord des Revenus</h2>
+            <p>Gérez vos tâches en ligne et suivez vos gains automatiques générés chaque jour.</p>
+            <div class="solde-box">
+                <span>Solde Total</span>
+                <h3>0.00 Ar</h3>
+            </div>
+        </div>
+
+        <!-- Carte cliquable "Revenu" -->
+        <div class="card-item" onclick="switchView('revenue-view')">
+            <h4>Revenu Quotidien Automatique</h4>
+            <div class="value">1,500 Ar / jour</div>
+            <div class="sub-text">↑ Génération en cours (Cliquez pour détails)</div>
+        </div>
+
+        <!-- Autres éléments -->
+        <div class="card-item">
+            <h4>Tâches Complétées</h4>
+            <div class="value">0</div>
+            <div class="sub-text" style="color: #94a3b8;">Disponibles aujourd'hui</div>
+        </div>
+    </div>
+
+    <!-- VUE 2 : PAGE DE DETAIL DES REVENUS (AVEC TEXTE CLIGNOTANT) -->
+    <div id="revenue-view" class="view">
+        <button class="btn-back" onclick="switchView('main-view')">← Retour</button>
         
-        <!-- Welcome Banner -->
-        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 mb-8 shadow-xl flex flex-col md:flex-row justify-between items-center">
-            <div>
-                <h1 class="text-2xl md:text-3xl font-extrabold mb-2">Tableau de Bord des Revenus</h1>
-                <p class="text-indigo-100 text-sm md:text-base">Gérez vos tâches en ligne et suivez vos gains automatiques générés chaque jour.</p>
-            </div>
-            <div class="mt-4 md:mt-0 bg-white/10 backdrop-blur-md px-6 py-4 rounded-xl border border-white/20 text-center">
-                <span class="block text-xs uppercase tracking-wider text-indigo-200">Solde Total</span>
-                <span id="total-balance" class="text-3xl font-black text-emerald-300">0.00 Ar</span>
+        <!-- Texte clignotant demandé -->
+        <div class="blinking-text">
+            ⚠️ L'ADMIN EST EN TRAIN DE FAIRE MISE A JOUR ⚠️
+        </div>
+
+        <div class="card-main">
+            <h2>Détails des Revenus</h2>
+            <p>Statut actuel du système de génération automatique.</p>
+            <div class="solde-box">
+                <span>Rendement Actuel</span>
+                <h3>1,500 Ar / jour</h3>
             </div>
         </div>
 
-        <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-slate-800 border border-slate-700 p-6 rounded-xl shadow-lg">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-slate-400 font-medium">Revenu Quotidien Automatique</h3>
-                    <i class="fa-solid fa-coins text-yellow-400 text-xl"></i>
-                </div>
-                <p id="daily-income" class="text-2xl font-bold">1,500 Ar / jour</p>
-                <span class="text-xs text-emerald-400 mt-2 block"><i class="fa-solid fa-arrow-up"></i> Génération en cours</span>
-            </div>
-
-            <div class="bg-slate-800 border border-slate-700 p-6 rounded-xl shadow-lg">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-slate-400 font-medium">Tâches Complétées</h3>
-                    <i class="fa-solid fa-list-check text-indigo-400 text-xl"></i>
-                </div>
-                <p id="tasks-count" class="text-2xl font-bold">0</p>
-                <span class="text-xs text-slate-400 mt-2 block">Disponibles aujourd'hui</span>
-            </div>
-
-            <div class="bg-slate-800 border border-slate-700 p-6 rounded-xl shadow-lg">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-slate-400 font-medium">Statut du Compte</h3>
-                    <i class="fa-solid fa-shield-halved text-emerald-400 text-xl"></i>
-                </div>
-                <p class="text-2xl font-bold text-emerald-400">Standard VIP</p>
-                <span class="text-xs text-slate-400 mt-2 block">Vérifié & Sécurisé</span>
-            </div>
+        <div class="card-item">
+            <h4>État du Réseau</h4>
+            <div class="value" style="color: #f87171;">En Maintenance</div>
+            <div class="sub-text" style="color: #f87171;">Veuillez patienter pendant la mise à jour.</div>
         </div>
+    </div>
 
-        <!-- Actions / Tasks Section -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Section Tâches en Ligne -->
-            <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg">
-                <h2 class="text-lg font-bold mb-4 flex items-center"><i class="fa-solid fa-laptop-code text-indigo-400 mr-2"></i> Tâches de Travail en Ligne</h2>
-                <div class="space-y-4">
-                    <div class="bg-slate-700
-                      
+    <script>
+        function switchView(viewId) {
+            // Masquer toutes les vues
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+            // Afficher la vue demandée
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
