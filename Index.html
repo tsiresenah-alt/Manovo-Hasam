@@ -420,15 +420,15 @@
                 <form id="reg-form" onsubmit="handleRegister(event)">
                     <div class="form-group">
                         <label for="username">Nom d'utilisateur</label>
-                        <input type="text" id="username" required placeholder="Votre nom">
+                        <input type="text" id="username" required placeholder="Votre nom (lettres uniquement)">
                     </div>
                     <div class="form-group">
                         <label for="phone">Numéro</label>
-                        <input type="tel" id="phone" required placeholder="Votre numéro">
+                        <input type="tel" id="phone" required placeholder="Ex: 0341234567 (10 chiffres)" maxlength="10">
                     </div>
                     <div class="form-group">
                         <label for="password">Mot de passe (Mdp)</label>
-                        <input type="password" id="password" required placeholder="Votre mot de passe">
+                        <input type="password" id="password" required placeholder="Lettres et chiffres requis">
                     </div>
                     <button type="submit" class="btn-submit">S'inscrire et recevoir 2 000 AR</button>
                 </form>
@@ -446,7 +446,7 @@
 
         <!-- TABLEAU DE BORD PRINCIPAL (BOSSMAN) -->
         <div id="main-view" class="view">
-            <!-- En-tête -->
+            <!-- En-tête (Icône de déconnexion supprimée) -->
             <div class="dashboard-header">
                 <div class="logo-area">
                     👑 BOSSMAN
@@ -455,9 +455,6 @@
                     <button class="icon-btn" onclick="openNotifications()">
                         🔔
                         <span class="notification-badge" id="notifCount">0</span>
-                    </button>
-                    <button class="icon-btn" onclick="logout()" title="Déconnexion">
-                        🚪
                     </button>
                 </div>
             </div>
@@ -555,16 +552,4 @@
                 <div class="check-icon">✔️</div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                     <div style="display: flex; align-items: center; gap: 12px;">
-                        <div style="background: #f97316; color: white; width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px;">OM</div>
-                        <div>
-                            <div style="font-weight: bold; font-size: 16px;">Orange Money</div>
-                            <div style="font-size: 14px; color: #94a3b8; margin-top: 2px;">0371897870</div>
-                            <div style="font-size: 13px; color: #facc15; font-weight: 600; margin-top: 2px;">Manovo Hasambarana</div>
-                        </div>
-                    </div>
-                    <button onclick="event.stopPropagation(); copyNumber('0371897870')" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); padding: 8px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer;">📋 Copier</button>
-                </div>
-                <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.05); margin: 14px 0;">
-                <p style="font-size: 13px; color: #94a3b8; line-height: 1.5;">
-                    Composez *144# puis saisissez le numéro du bénéficiaire et le montant. Conservez la référence de la transaction.
-    
+                        <div style="background: #f973
