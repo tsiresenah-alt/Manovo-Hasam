@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alpha Plus - Tableau de Bord</title>
+    <title>Bossman - Tableau de Bord</title>
     <style>
         * {
             box-sizing: border-box;
@@ -72,13 +72,13 @@
             transition: border-color 0.2s;
         }
         .form-group input:focus {
-            border-color: #2563eb;
+            border-color: #eab308;
         }
         .btn-submit {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #1d4ed8, #2563eb);
-            color: white;
+            background: linear-gradient(135deg, #eab308, #ca8a04);
+            color: #000;
             border: none;
             border-radius: 12px;
             font-size: 16px;
@@ -104,7 +104,7 @@
             width: 50px;
             height: 50px;
             border: 4px solid rgba(255, 255, 255, 0.1);
-            border-top: 4px solid #2563eb;
+            border-top: 4px solid #eab308;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 0 auto 20px auto;
@@ -114,7 +114,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* DESIGN TABLEAU DE BORD (STYLE ALPHA PLUS) */
+        /* DESIGN TABLEAU DE BORD (BOSSMAN) */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
@@ -125,9 +125,9 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
-            color: #60a5fa;
+            color: #facc15;
             letter-spacing: 1px;
         }
         .header-icons {
@@ -151,7 +151,7 @@
             position: absolute;
             top: -2px;
             right: -2px;
-            background: #f97316;
+            background: #ef4444;
             color: white;
             font-size: 10px;
             padding: 2px 5px;
@@ -160,19 +160,20 @@
         }
 
         .user-greeting {
-            background: linear-gradient(135deg, #1e3a8a, #1d4ed8);
+            background: linear-gradient(135deg, #713f12, #854d0e);
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 16px;
-            box-shadow: 0 10px 20px rgba(29, 78, 216, 0.3);
+            box-shadow: 0 10px 20px rgba(113, 63, 18, 0.3);
         }
         .user-greeting p {
             font-size: 14px;
-            color: #93c5fd;
+            color: #fde047;
         }
         .user-greeting h1 {
             font-size: 24px;
             margin: 4px 0 12px 0;
+            color: #ffffff;
         }
         .id-badge {
             display: inline-flex;
@@ -223,7 +224,7 @@
             cursor: pointer;
         }
         .card-status {
-            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+            background: linear-gradient(135deg, #16a34a, #15803d);
             border-radius: 16px;
             padding: 16px;
             color: white;
@@ -239,7 +240,7 @@
             font-weight: bold;
         }
 
-        /* Boutons d'action rapides (Dépôt, Retrait, Aide, Équipe) */
+        /* Boutons d'action rapides */
         .actions-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -313,7 +314,29 @@
             font-size: 12px;
         }
         .nav-item.active {
-            color: #60a5fa;
+            color: #facc15;
+        }
+
+        /* Pop-up Bonus Notification */
+        .bonus-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 14px;
+            font-weight: bold;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            transition: transform 0.4s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .bonus-toast.show {
+            transform: translateX(-50%) translateY(0);
         }
 
         /* VUE MAINTENANCE */
@@ -345,6 +368,11 @@
 </head>
 <body>
 
+    <!-- Notification Toast Bonus -->
+    <div id="bonusToast" class="bonus-toast">
+        🎁 Bonus d'inscription reçu : <span>+2 000 AR</span>
+    </div>
+
     <div class="container">
         <!-- VUE INSCRIPTION / CONNEXION -->
         <div id="auth-view" class="view active">
@@ -353,7 +381,7 @@
             </div>
 
             <div class="form-card">
-                <h3 style="margin-bottom: 20px; text-align: center; font-size: 20px;">Connexion Alpha Plus</h3>
+                <h3 style="margin-bottom: 20px; text-align: center; font-size: 20px;">Inscription Bossman</h3>
                 <form id="reg-form" onsubmit="handleRegister(event)">
                     <div class="form-group">
                         <label for="username">Nom d'utilisateur</label>
@@ -367,7 +395,7 @@
                         <label for="password">Mot de passe (Mdp)</label>
                         <input type="password" id="password" required placeholder="Votre mot de passe">
                     </div>
-                    <button type="submit" class="btn-submit">Se connecter</button>
+                    <button type="submit" class="btn-submit">S'inscrire et recevoir 2 000 AR</button>
                 </form>
             </div>
         </div>
@@ -376,22 +404,22 @@
         <div id="loading-view" class="view">
             <div class="loading-container">
                 <div class="spinner"></div>
-                <h3 style="font-size: 18px; margin-bottom: 8px;">Connexion en cours...</h3>
-                <p style="color: #94a3b8; font-size: 14px;">Veuillez patienter</p>
+                <h3 style="font-size: 18px; margin-bottom: 8px;">Création du compte...</h3>
+                <p style="color: #94a3b8; font-size: 14px;">Attribution du bonus de 2 000 AR</p>
             </div>
         </div>
 
-        <!-- TABLEAU DE BORD PRINCIPAL (STYLE ALPHA PLUS) -->
+        <!-- TABLEAU DE BORD PRINCIPAL (BOSSMAN) -->
         <div id="main-view" class="view">
             <!-- En-tête -->
             <div class="dashboard-header">
                 <div class="logo-area">
-                    👑 ALPHA PLUS
+                    👑 BOSSMAN
                 </div>
                 <div class="header-icons">
                     <button class="icon-btn" onclick="switchView('maintenance-view')">
                         🔔
-                        <span class="notification-badge">10</span>
+                        <span class="notification-badge" id="notifCount">11</span>
                     </button>
                     <button class="icon-btn" onclick="location.reload()" title="Déconnexion">
                         🚪
@@ -404,25 +432,25 @@
                 <p>Bienvenue,</p>
                 <h1 id="display-name">Utilisateur</h1>
                 <div class="id-badge">
-                    <span>ID: APB64918AE</span>
+                    <span>ID: BOSS9481AE</span>
                     <span>📋</span>
                 </div>
             </div>
 
-            <!-- Carte Solde Disponible -->
+            <!-- Carte Solde Disponible (Mis à 2 000 AR avec le bonus) -->
             <div class="balance-card" onclick="switchView('maintenance-view')">
                 <div class="title-row">
                     <span>💳</span>
                     <span>Mon solde disponible</span>
                 </div>
-                <div class="amount">15 600 AR</div>
+                <div class="amount" id="balanceAmount">2 000 AR</div>
             </div>
 
             <!-- Grille VIP et Statut -->
             <div class="grid-cards">
                 <div class="card-vip" onclick="switchView('maintenance-view')">
                     <h4>Mon VIP</h4>
-                    <div class="val">VIP1</div>
+                    <div class="val">VIP0</div>
                 </div>
                 <div class="card-status" onclick="switchView('maintenance-view')">
                     <h4>Mon statut</h4>
@@ -488,20 +516,52 @@
     </div>
 
     <script>
+        // Fonction pour jouer une sonnerie de notification avec Web Audio API
+        function playNotificationSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(587.33, audioCtx.currentTime); // Note D5
+                oscillator.frequency.setValueAtTime(880, audioCtx.currentTime + 0.15); // Note A5
+
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.5);
+            } catch (e) {
+                console.log("Audio non autorisé automatiquement");
+            }
+        }
+
         function handleRegister(event) {
             event.preventDefault();
-            // Récupérer le nom entré par l'utilisateur
             const username = document.getElementById('username').value;
             document.getElementById('display-name').textContent = username;
 
-            // Masquer le formulaire et afficher l'écran de chargement
+            // Masquer le formulaire et afficher le chargement
             document.getElementById('auth-view').classList.remove('active');
             document.getElementById('loading-view').classList.add('active');
 
-            // Attendre 1.5 secondes puis afficher le tableau de bord Alpha Plus
+            // Attendre 1.5 secondes
             setTimeout(() => {
                 document.getElementById('loading-view').classList.remove('active');
                 document.getElementById('main-view').classList.add('active');
+
+                // Jouer la sonnerie et afficher la notification du bonus de 2000 AR
+                playNotificationSound();
+                const toast = document.getElementById('bonusToast');
+                toast.classList.add('show');
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
             }, 1500);
         }
 
