@@ -24,7 +24,7 @@
             width: 100%;
             max-width: 400px;
         }
-        /* Style du texte de bienvenue aux couleurs du drapeau malgache (Rouge, Blanc, Vert) et clignotant */
+        /* Style du texte de bienvenue (Blanc, Rouge, Vert) et clignotant */
         .welcome-title {
             text-align: center;
             font-size: 32px;
@@ -33,8 +33,8 @@
             animation: blink 1.2s infinite;
             letter-spacing: 2px;
         }
-        .welcome-title .red { color: #FC3D32; }
         .welcome-title .white { color: #FFFFFF; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
+        .welcome-title .red { color: #FC3D32; }
         .welcome-title .green { color: #007A3D; }
 
         @keyframes blink {
@@ -214,9 +214,9 @@
     <div class="container">
         <!-- VUE INSCRIPTION / CONNEXION -->
         <div id="auth-view" class="view active">
-            <!-- Bienvenue clignotant aux couleurs du drapeau malgache (Rouge, Blanc, Vert) -->
+            <!-- Bienvenue clignotant en Blanc, Rouge, Vert -->
             <div class="welcome-title">
-                <span class="red">BIEN</span><span class="white">VEN</span><span class="green">UE</span>
+                <span class="white">BIEN</span><span class="red">VEN</span><span class="green">UE</span>
             </div>
 
             <div class="form-card">
