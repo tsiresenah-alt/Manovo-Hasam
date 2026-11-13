@@ -317,6 +317,40 @@
             color: #facc15;
         }
 
+        /* Style de la carte de paiement cliquable avec icône ✔️ */
+        .payment-card {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 20px;
+            border: 2px solid rgba(255,255,255,0.05);
+            margin-bottom: 20px;
+            cursor: pointer;
+            position: relative;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        .payment-card.selected {
+            border-color: #f97316;
+            background: #232d3f;
+        }
+        .check-icon {
+            display: none;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f97316;
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .payment-card.selected .check-icon {
+            display: flex;
+        }
+
         /* Pop-up Toast */
         .bonus-toast {
             position: fixed;
@@ -387,4 +421,256 @@
                         <label for="username">Nom d'utilisateur</label>
                         <input type="text" id="username" required placeholder="Votre nom">
                     </div>
-                    <div class
+                    <div class="form-group">
+                        <label for="phone">Numéro</label>
+                        <input type="tel" id="phone" required placeholder="Votre numéro">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe (Mdp)</label>
+                        <input type="password" id="password" required placeholder="Votre mot de passe">
+                    </div>
+                    <button type="submit" class="btn-submit">S'inscrire et recevoir 2 000 AR</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- VUE DE CHARGEMENT -->
+        <div id="loading-view" class="view">
+            <div class="loading-container">
+                <div class="spinner"></div>
+                <h3 style="font-size: 18px; margin-bottom: 8px;">Création du compte...</h3>
+                <p style="color: #94a3b8; font-size: 14px;">Attribution du bonus de 2 000 AR</p>
+            </div>
+        </div>
+
+        <!-- TABLEAU DE BORD PRINCIPAL (BOSSMAN) -->
+        <div id="main-view" class="view">
+            <!-- En-tête -->
+            <div class="dashboard-header">
+                <div class="logo-area">
+                    👑 BOSSMAN
+                </div>
+                <div class="header-icons">
+                    <button class="icon-btn" onclick="switchView('maintenance-view')">
+                        🔔
+                        <span class="notification-badge" id="notifCount">11</span>
+                    </button>
+                    <button class="icon-btn" onclick="location.reload()" title="Déconnexion">
+                        🚪
+                    </button>
+                </div>
+            </div>
+
+            <!-- Message d'accueil avec le nom saisi -->
+            <div class="user-greeting">
+                <p>Bienvenue,</p>
+                <h1 id="display-name">Utilisateur</h1>
+                <div class="id-badge">
+                    <span>ID: BOSS9481AE</span>
+                    <span>📋</span>
+                </div>
+            </div>
+
+            <!-- Carte Solde Disponible -->
+            <div class="balance-card" onclick="switchView('maintenance-view')">
+                <div class="title-row">
+                    <span>💳</span>
+                    <span>Mon solde disponible</span>
+                </div>
+                <div class="amount" id="balanceAmount">2 000 AR</div>
+            </div>
+
+            <!-- Grille VIP et Statut -->
+            <div class="grid-cards">
+                <div class="card-vip" onclick="switchView('maintenance-view')">
+                    <h4>Mon VIP</h4>
+                    <div class="val">VIP0</div>
+                </div>
+                <div class="card-status" onclick="switchView('maintenance-view')">
+                    <h4>Mon statut</h4>
+                    <div class="val">Actif</div>
+                </div>
+            </div>
+
+            <!-- Boutons d'action rapides -->
+            <div class="actions-grid">
+                <div class="action-item" onclick="switchView('deposit-view')">
+                    <div class="action-icon bg-deposit">↓</div>
+                    <span>Dépôt</span>
+                </div>
+                <div class="action-item" onclick="switchView('maintenance-view')">
+                    <div class="action-icon bg-withdraw">↑</div>
+                    <span>Retrait</span>
+                </div>
+                <div class="action-item" onclick="switchView('maintenance-view')">
+                    <div class="action-icon bg-help">?</div>
+                    <span>AIDE</span>
+                </div>
+                <div class="action-item" onclick="switchView('maintenance-view')">
+                    <div class="action-icon bg-team">👥</div>
+                    <span>ÉQUIPE</span>
+                </div>
+            </div>
+
+            <!-- Section Tâche quotidienne -->
+            <div class="section-title">
+                <span>⚡</span> Tâche quotidienne
+            </div>
+            <div class="task-card" onclick="switchView('maintenance-view')">
+                <div style="font-size: 36px; margin-bottom: 8px;">👑</div>
+                <p>Activez un VIP pour accéder à la tâche quotidienne et recevoir une récompense.</p>
+            </div>
+
+            <!-- Barre de navigation inférieure -->
+            <div class="bottom-nav">
+                <div class="nav-item active">
+                    <div style="font-size: 20px;">🏠</div>
+                    <span>Accueil</span>
+                </div>
+                <div class="nav-item" onclick="switchView('maintenance-view')">
+                    <div style="font-size: 20px;">👑</div>
+                    <span>Plan</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- VUE DEPOT (AVEC CARTE ORANGE MONEY CLIQUABLE ET ✔️) -->
+        <div id="deposit-view" class="view">
+            <button class="btn-back" onclick="switchView('main-view')">← Retour</button>
+            
+            <div style="font-size: 24px; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                <span>💳</span> Dépôt
+            </div>
+
+            <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 14px; padding: 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 20px; color: #3b82f6;">ℹ️</span>
+                <span style="font-size: 14px; color: #93c5fd;">Le montant minimum de dépôt est de <strong>20 000 AR</strong>.</span>
+            </div>
+
+            <h3 style="font-size: 16px; margin-bottom: 14px; color: #cbd5e1;">Modes de paiement Mobile Money</h3>
+
+            <!-- Carte Orange Money cliquable avec icône ✔️ -->
+            <div class="payment-card selected" onclick="togglePayment(this)">
+                <div class="check-icon">✔️</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="background: #f97316; color: white; width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px;">OM</div>
+                        <div>
+                            <div style="font-weight: bold; font-size: 16px;">Orange Money</div>
+                            <div style="font-size: 14px; color: #94a3b8; margin-top: 2px;">0371897870</div>
+                            <div style="font-size: 13px; color: #facc15; font-weight: 600; margin-top: 2px;">Manovo Hasambarana</div>
+                        </div>
+                    </div>
+                    <button onclick="event.stopPropagation(); copyNumber('0371897870')" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); padding: 8px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer;">📋 Copier</button>
+                </div>
+                <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.05); margin: 14px 0;">
+                <p style="font-size: 13px; color: #94a3b8; line-height: 1.5;">
+                    Composez *144# puis saisissez le numéro du bénéficiaire et le montant. Conservez la référence de la transaction.
+                </p>
+            </div>
+
+            <!-- FORMULAIRE DE DEPOT -->
+            <div class="form-card">
+                <form onsubmit="handleDepositSubmit(event)">
+                    <div class="form-group">
+                        <label for="depositAmount">Montant (Ariary)</label>
+                        <input type="number" id="depositAmount" required placeholder="20000" min="20000">
+                    </div>
+                    <div class="form-group">
+                        <label for="senderPhone">Numéro utilisé pour le paiement</label>
+                        <input type="tel" id="senderPhone" required placeholder="03X XX XXX XX">
+                    </div>
+                    <div class="form-group">
+                        <label for="depositRef">Référence de transaction</label>
+                        <input type="text" id="depositRef" required placeholder="Référence Mobile Money">
+                    </div>
+                    <div class="form-group">
+                        <label>Justificatif de paiement</label>
+                        <label style="display: block; border: 2px dashed #334155; border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; background: #0b0f19;">
+                            <span style="font-size: 24px; display: block; margin-bottom: 6px;">📤</span>
+                            <span style="font-size: 13px; color: #94a3b8;" id="fileName">Cliquez pour téléverser une image</span>
+                            <input type="file" accept="image/*" style="display: none;" onchange="updateFileName(this)">
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-submit" style="background: linear-gradient(135deg, #1d4ed8, #2563eb); color: white;">SOUMETTRE</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- VUE MAINTENANCE -->
+        <div id="maintenance-view" class="view">
+            <button class="btn-back" onclick="switchView('main-view')">← Retour</button>
+            
+            <div class="blinking-text">
+                ⚠️ L'ADMIN EST EN TRAIN DE FAIRE MISE A JOUR ⚠️
+            </div>
+
+            <div class="form-card" style="text-align: center;">
+                <h3 style="margin-bottom: 10px;">Système en Maintenance</h3>
+                <p style="color: #94a3b8; font-size: 14px;">Cette section est temporairement indisponible pendant la mise à jour de l'administrateur.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour activer/désactiver la sélection de la carte de paiement
+        function togglePayment(card) {
+            card.classList.toggle('selected');
+        }
+
+        // Fonction pour copier le numéro
+        function copyNumber(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('bonusToast');
+                toast.innerHTML = "📋 Numéro copié : " + text;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    toast.innerHTML = "🎁 Bonus d'inscription reçu : <span>+2 000 AR</span>";
+                }, 3000);
+            });
+        }
+
+        function updateFileName(input) {
+            if (input.files && input.files[0]) {
+                document.getElementById('fileName').textContent = input.files[0].name;
+            }
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            document.getElementById('display-name').textContent = username;
+
+            document.getElementById('auth-view').classList.remove('active');
+            document.getElementById('loading-view').classList.add('active');
+
+            setTimeout(() => {
+                document.getElementById('loading-view').classList.remove('active');
+                document.getElementById('main-view').classList.add('active');
+
+                const toast = document.getElementById('bonusToast');
+                toast.classList.add('show');
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+            }, 1500);
+        }
+
+        function handleDepositSubmit(event) {
+            event.preventDefault();
+            alert("Demande de dépôt soumise avec succès ! Elle sera traitée après vérification.");
+            switchView('main-view');
+        }
+
+        function switchView(viewId) {
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
