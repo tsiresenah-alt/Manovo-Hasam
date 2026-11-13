@@ -455,7 +455,7 @@
                         🔔
                         <span class="notification-badge" id="notifCount">11</span>
                     </button>
-                    <button class="icon-btn" onclick="location.reload()" title="Déconnexion">
+                    <button class="icon-btn" onclick="logout()" title="Déconnexion">
                         🚪
                     </button>
                 </div>
@@ -534,7 +534,7 @@
             </div>
         </div>
 
-        <!-- VUE DEPOT (AVEC CARTE ORANGE MONEY CLIQUABLE ET ✔️) -->
+        <!-- VUE DEPOT -->
         <div id="deposit-view" class="view">
             <button class="btn-back" onclick="switchView('main-view')">← Retour</button>
             
@@ -613,12 +613,23 @@
     </div>
 
     <script>
-        // Fonction pour activer/désactiver la sélection de la carte de paiement
+        // Restauration de la session et de la vue au chargement de la page (après actualisation)
+        window.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('bossman_logged');
+            if (isLoggedIn === 'true') {
+                const username = localStorage.getItem('bossman_user') || 'Utilisateur';
+                document.getElementById('display-name').textContent = username;
+
+                const savedView = localStorage.getItem('bossman_view') || 'main-view';
+                document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+                document.getElementById(savedView).classList.add('active');
+            }
+        });
+
         function togglePayment(card) {
             card.classList.toggle('selected');
         }
 
-        // Fonction pour copier le numéro
         function copyNumber(text) {
             navigator.clipboard.writeText(text).then(() => {
                 const toast = document.getElementById('bonusToast');
@@ -640,6 +651,12 @@
         function handleRegister(event) {
             event.preventDefault();
             const username = document.getElementById('username').value;
+            
+            // Enregistrement de la session dans localStorage
+            localStorage.setItem('bossman_logged', 'true');
+            localStorage.setItem('bossman_user', username);
+            localStorage.setItem('bossman_view', 'main-view');
+
             document.getElementById('display-name').textContent = username;
 
             document.getElementById('auth-view').classList.remove('active');
@@ -669,7 +686,16 @@
                 view.classList.remove('active');
             });
             document.getElementById(viewId).classList.add('active');
+            
+            // Sauvegarde de la vue actuelle dans localStorage
+            localStorage.setItem('bossman_view', viewId);
             window.scrollTo(0, 0);
+        }
+
+        // Fonction de déconnexion (si on clique sur la porte de sortie)
+        function logout() {
+            localStorage.clear();
+            location.reload();
         }
     </script>
 </body>
