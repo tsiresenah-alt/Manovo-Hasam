@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WorkEarn Pro</title>
+    <title>WorkEarn Pro - Connexion</title>
     <style>
         * {
             box-sizing: border-box;
@@ -15,7 +15,83 @@
             background-color: #0b0f19;
             color: #ffffff;
             padding: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
+        .container {
+            width: 100%;
+            max-width: 400px;
+        }
+        /* Style du texte de bienvenue aux couleurs du drapeau malgache (Rouge, Blanc, Vert) et clignotant */
+        .welcome-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 24px;
+            animation: blink 1.2s infinite;
+            letter-spacing: 2px;
+        }
+        .welcome-title .red { color: #FC3D32; }
+        .welcome-title .white { color: #FFFFFF; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
+        .welcome-title .green { color: #007A3D; }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .form-card {
+            background-color: #1e293b;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 6px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: #0b0f19;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus {
+            border-color: #6366f1;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 10px;
+        }
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        /* Styles du tableau de bord */
         .header {
             display: flex;
             justify-content: space-between;
@@ -104,7 +180,6 @@
             color: #34d399;
             margin-top: 6px;
         }
-        /* Style pour le clignotement du texte */
         .blinking-text {
             animation: blink 1s infinite;
             color: #f87171;
@@ -115,11 +190,6 @@
             border-radius: 10px;
             margin-bottom: 20px;
             border: 1px solid rgba(248, 113, 113, 0.3);
-        }
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0.2; }
-            100% { opacity: 1; }
         }
         .btn-back {
             background-color: #334155;
@@ -141,67 +211,102 @@
 </head>
 <body>
 
-    <!-- VUE 1 : TABLEAU DE BORD PRINCIPAL -->
-    <div id="main-view" class="view active">
-        <div class="header">
-            <div class="logo-container">
-                <div class="logo-box">📊</div>
-                <h2>WorkEarn Pro</h2>
+    <div class="container">
+        <!-- VUE INSCRIPTION / CONNEXION -->
+        <div id="auth-view" class="view active">
+            <!-- Bienvenue clignotant aux couleurs du drapeau malgache (Rouge, Blanc, Vert) -->
+            <div class="welcome-title">
+                <span class="red">BIEN</span><span class="white">VEN</span><span class="green">UE</span>
             </div>
-            <div class="badge-actif">Actif</div>
-        </div>
 
-        <!-- Carte Principale -->
-        <div class="card-main">
-            <h2>Tableau de Bord des Revenus</h2>
-            <p>Gérez vos tâches en ligne et suivez vos gains automatiques générés chaque jour.</p>
-            <div class="solde-box">
-                <span>Solde Total</span>
-                <h3>0.00 Ar</h3>
-            </div>
-        </div>
-
-        <!-- Carte cliquable "Revenu" -->
-        <div class="card-item" onclick="switchView('revenue-view')">
-            <h4>Revenu Quotidien Automatique</h4>
-            <div class="value">1,500 Ar / jour</div>
-            <div class="sub-text">↑ Génération en cours (Cliquez pour détails)</div>
-        </div>
-
-        <!-- Autres éléments -->
-        <div class="card-item">
-            <h4>Tâches Complétées</h4>
-            <div class="value">0</div>
-            <div class="sub-text" style="color: #94a3b8;">Disponibles aujourd'hui</div>
-        </div>
-    </div>
-
-    <!-- VUE 2 : PAGE DE DETAIL DES REVENUS (AVEC TEXTE CLIGNOTANT) -->
-    <div id="revenue-view" class="view">
-        <button class="btn-back" onclick="switchView('main-view')">← Retour</button>
-        
-        <!-- Texte clignotant demandé -->
-        <div class="blinking-text">
-            ⚠️ L'ADMIN EST EN TRAIN DE FAIRE MISE A JOUR ⚠️
-        </div>
-
-        <div class="card-main">
-            <h2>Détails des Revenus</h2>
-            <p>Statut actuel du système de génération automatique.</p>
-            <div class="solde-box">
-                <span>Rendement Actuel</span>
-                <h3>1,500 Ar / jour</h3>
+            <div class="form-card">
+                <h3 style="margin-bottom: 20px; text-align: center; font-size: 20px;">Inscription WorkEarn Pro</h3>
+                <form id="reg-form" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="username">Nom d'utilisateur</label>
+                        <input type="text" id="username" required placeholder="Votre nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Numéro</label>
+                        <input type="tel" id="phone" required placeholder="Votre numéro">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe (Mdp)</label>
+                        <input type="password" id="password" required placeholder="Votre mot de passe">
+                    </div>
+                    <button type="submit" class="btn-submit">Se connecter</button>
+                </form>
             </div>
         </div>
 
-        <div class="card-item">
-            <h4>État du Réseau</h4>
-            <div class="value" style="color: #f87171;">En Maintenance</div>
-            <div class="sub-text" style="color: #f87171;">Veuillez patienter pendant la mise à jour.</div>
+        <!-- VUE 1 : TABLEAU DE BORD PRINCIPAL -->
+        <div id="main-view" class="view">
+            <div class="header">
+                <div class="logo-container">
+                    <div class="logo-box">📊</div>
+                    <h2>WorkEarn Pro</h2>
+                </div>
+                <div class="badge-actif">Actif</div>
+            </div>
+
+            <!-- Carte Principale -->
+            <div class="card-main">
+                <h2>Tableau de Bord des Revenus</h2>
+                <p>Gérez vos tâches en ligne et suivez vos gains automatiques générés chaque jour.</p>
+                <div class="solde-box">
+                    <span>Solde Total</span>
+                    <h3>0.00 Ar</h3>
+                </div>
+            </div>
+
+            <!-- Carte cliquable "Revenu" -->
+            <div class="card-item" onclick="switchView('revenue-view')">
+                <h4>Revenu Quotidien Automatique</h4>
+                <div class="value">1,500 Ar / jour</div>
+                <div class="sub-text">↑ Génération en cours (Cliquez pour détails)</div>
+            </div>
+
+            <!-- Autres éléments -->
+            <div class="card-item">
+                <h4>Tâches Complétées</h4>
+                <div class="value">0</div>
+                <div class="sub-text" style="color: #94a3b8;">Disponibles aujourd'hui</div>
+            </div>
+        </div>
+
+        <!-- VUE 2 : PAGE DE DETAIL DES REVENUS (AVEC TEXTE CLIGNOTANT DE MAINTENANCE) -->
+        <div id="revenue-view" class="view">
+            <button class="btn-back" onclick="switchView('main-view')">← Retour</button>
+            
+            <div class="blinking-text">
+                ⚠️ L'ADMIN EST EN TRAIN DE FAIRE MISE A JOUR ⚠️
+            </div>
+
+            <div class="card-main">
+                <h2>Détails des Revenus</h2>
+                <p>Statut actuel du système de génération automatique.</p>
+                <div class="solde-box">
+                    <span>Rendement Actuel</span>
+                    <h3>1,500 Ar / jour</h3>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <h4>État du Réseau</h4>
+                <div class="value" style="color: #f87171;">En Maintenance</div>
+                <div class="sub-text" style="color: #f87171;">Veuillez patienter pendant la mise à jour.</div>
+            </div>
         </div>
     </div>
 
     <script>
+        function handleRegister(event) {
+            event.preventDefault();
+            // Basculer vers le tableau de bord après validation du formulaire
+            document.getElementById('auth-view').classList.remove('active');
+            document.getElementById('main-view').classList.add('active');
+        }
+
         function switchView(viewId) {
             // Masquer toutes les vues
             document.querySelectorAll('.view').forEach(view => {
