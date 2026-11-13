@@ -60,7 +60,7 @@
             color: #94a3b8;
             margin-bottom: 6px;
         }
-        .form-group input, .form-group select {
+        .form-group input {
             width: 100%;
             padding: 12px 16px;
             background-color: #0b0f19;
@@ -500,7 +500,7 @@
             </div>
         </div>
 
-        <!-- VUE DEPOT (AVEC FORMULAIRE DE SOUMISSION) -->
+        <!-- VUE DEPOT -->
         <div id="deposit-view" class="view">
             <button class="btn-back" onclick="switchView('main-view')">← Retour</button>
             
@@ -508,7 +508,6 @@
                 <span>💳</span> Dépôt
             </div>
 
-            <!-- Alerte Minimum -->
             <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 14px; padding: 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
                 <span style="font-size: 20px; color: #3b82f6;">ℹ️</span>
                 <span style="font-size: 14px; color: #93c5fd;">Le montant minimum de dépôt est de <strong>20 000 AR</strong>.</span>
@@ -516,7 +515,6 @@
 
             <h3 style="font-size: 16px; margin-bottom: 14px; color: #cbd5e1;">Modes de paiement Mobile Money</h3>
 
-            <!-- Carte Orange Money avec Copie -->
             <div style="background: #1e293b; border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                     <div style="display: flex; align-items: center; gap: 12px;">
@@ -535,7 +533,6 @@
                 </p>
             </div>
 
-            <!-- FORMULAIRE DE DEPOT -->
             <div class="form-card">
                 <form onsubmit="handleDepositSubmit(event)">
                     <div class="form-group">
@@ -550,4 +547,92 @@
                         <label for="depositRef">Référence de transaction</label>
                         <input type="text" id="depositRef" required placeholder="Référence Mobile Money">
                     </div>
-                    <div 
+                    <div class="form-group">
+                        <label>Justificatif de paiement</label>
+                        <label style="display: block; border: 2px dashed #334155; border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; background: #0b0f19;">
+                            <span style="font-size: 24px; display: block; margin-bottom: 6px;">📤</span>
+                            <span style="font-size: 13px; color: #94a3b8;" id="fileName">Cliquez pour téléverser une image</span>
+                            <input type="file" accept="image/*" style="display: none;" onchange="updateFileName(this)">
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-submit" style="background: linear-gradient(135deg, #1d4ed8, #2563eb); color: white;">SOUMETTRE</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- VUE MAINTENANCE -->
+        <div id="maintenance-view" class="view">
+            <button class="btn-back" onclick="switchView('main-view')">← Retour</button>
+            
+            <div class="blinking-text">
+                ⚠️ L'ADMIN EST EN TRAIN DE FAIRE MISE A JOUR ⚠️
+            </div>
+
+            <div class="form-card" style="text-align: center;">
+                <h3 style="margin-bottom: 10px;">Système en Maintenance</h3>
+                <p style="color: #94a3b8; font-size: 14px;">Cette section est temporairement indisponible pendant la mise à jour de l'administrateur.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fonction sécurisée pour copier le numéro
+        function copyNumber(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('bonusToast');
+                toast.innerHTML = "📋 Numéro copié : " + text;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    toast.innerHTML = "🎁 Bonus d'inscription reçu : <span>+2 000 AR</span>";
+                }, 3000);
+            });
+        }
+
+        function updateFileName(input) {
+            if (input.files && input.files[0]) {
+                document.getElementById('fileName').textContent = input.files[0].name;
+            }
+        }
+
+        // Fonction d'inscription 100% fluide et sécurisée
+        function handleRegister(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            document.getElementById('display-name').textContent = username;
+
+            // Masquer le formulaire et afficher le chargement
+            document.getElementById('auth-view').classList.remove('active');
+            document.getElementById('loading-view').classList.add('active');
+
+            // Passage au tableau de bord après 1.5 secondes sans blocage
+            setTimeout(() => {
+                document.getElementById('loading-view').classList.remove('active');
+                document.getElementById('main-view').classList.add('active');
+
+                // Afficher le toast du bonus
+                const toast = document.getElementById('bonusToast');
+                toast.classList.add('show');
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+            }, 1500);
+        }
+
+        function handleDepositSubmit(event) {
+            event.preventDefault();
+            alert("Demande de dépôt soumise avec succès ! Elle sera traitée après vérification.");
+            switchView('main-view');
+        }
+
+        function switchView(viewId) {
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
