@@ -451,9 +451,9 @@
                     👑 BOSSMAN
                 </div>
                 <div class="header-icons">
-                    <button class="icon-btn" onclick="switchView('maintenance-view')">
+                    <button class="icon-btn" onclick="openNotifications()">
                         🔔
-                        <span class="notification-badge" id="notifCount">11</span>
+                        <span class="notification-badge" id="notifCount">0</span>
                     </button>
                     <button class="icon-btn" onclick="logout()" title="Déconnexion">
                         🚪
@@ -613,7 +613,7 @@
     </div>
 
     <script>
-        // Restauration de la session et de la vue au chargement de la page (après actualisation)
+        // Restauration de la session et mise à jour du compteur de notifications réel
         window.addEventListener('DOMContentLoaded', () => {
             const isLoggedIn = localStorage.getItem('bossman_logged');
             if (isLoggedIn === 'true') {
@@ -623,8 +623,30 @@
                 const savedView = localStorage.getItem('bossman_view') || 'main-view';
                 document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
                 document.getElementById(savedView).classList.add('active');
+
+                updateNotificationBadge();
             }
         });
+
+        function updateNotificationBadge() {
+            let notifs = JSON.parse(localStorage.getItem('bossman_notifications')) || [];
+            const badge = document.getElementById('notifCount');
+            if (notifs.length > 0) {
+                badge.textContent = notifs.length;
+                badge.style.display = 'inline-block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function openNotifications() {
+            let notifs = JSON.parse(localStorage.getItem('bossman_notifications')) || [];
+            if (notifs.length > 0) {
+                alert("Mes Notifications :\n\n- " + notifs.join("\n- "));
+            } else {
+                alert("Aucune notification pour le moment.");
+            }
+        }
 
         function togglePayment(card) {
             card.classList.toggle('selected');
@@ -652,12 +674,16 @@
             event.preventDefault();
             const username = document.getElementById('username').value;
             
-            // Enregistrement de la session dans localStorage
+            // Enregistrement de la session et création d'une vraie notification de bonus
             localStorage.setItem('bossman_logged', 'true');
             localStorage.setItem('bossman_user', username);
             localStorage.setItem('bossman_view', 'main-view');
 
+            let notifs = ["🎁 Bonus d'inscription de 2 000 AR reçu avec succès !"];
+            localStorage.setItem('bossman_notifications', JSON.stringify(notifs));
+
             document.getElementById('display-name').textContent = username;
+            updateNotificationBadge();
 
             document.getElementById('auth-view').classList.remove('active');
             document.getElementById('loading-view').classList.add('active');
@@ -677,6 +703,13 @@
 
         function handleDepositSubmit(event) {
             event.preventDefault();
+            
+            // Ajout d'une notification en temps réel lors de la soumission d'un dépôt
+            let notifs = JSON.parse(localStorage.getItem('bossman_notifications')) || [];
+            notifs.push("💳 Demande de dépôt de " + document.getElementById('depositAmount').value + " AR en attente de validation.");
+            localStorage.setItem('bossman_notifications', JSON.stringify(notifs));
+            updateNotificationBadge();
+
             alert("Demande de dépôt soumise avec succès ! Elle sera traitée après vérification.");
             switchView('main-view');
         }
@@ -687,12 +720,10 @@
             });
             document.getElementById(viewId).classList.add('active');
             
-            // Sauvegarde de la vue actuelle dans localStorage
             localStorage.setItem('bossman_view', viewId);
             window.scrollTo(0, 0);
         }
 
-        // Fonction de déconnexion (si on clique sur la porte de sortie)
         function logout() {
             localStorage.clear();
             location.reload();
