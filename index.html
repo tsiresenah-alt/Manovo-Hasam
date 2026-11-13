@@ -91,6 +91,29 @@
             transform: scale(0.98);
         }
 
+        /* Style du chargement (Spinner) */
+        .loading-container {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #1e293b;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         /* Styles du tableau de bord */
         .header {
             display: flex;
@@ -214,7 +237,6 @@
     <div class="container">
         <!-- VUE INSCRIPTION / CONNEXION -->
         <div id="auth-view" class="view active">
-            <!-- Bienvenue clignotant en Blanc, Rouge, Vert -->
             <div class="welcome-title">
                 <span class="white">BIEN</span><span class="red">VEN</span><span class="green">UE</span>
             </div>
@@ -236,6 +258,15 @@
                     </div>
                     <button type="submit" class="btn-submit">Se connecter</button>
                 </form>
+            </div>
+        </div>
+
+        <!-- VUE DE CHARGEMENT -->
+        <div id="loading-view" class="view">
+            <div class="loading-container">
+                <div class="spinner"></div>
+                <h3 style="font-size: 18px; margin-bottom: 8px;">Connexion en cours...</h3>
+                <p style="color: #94a3b8; font-size: 14px;">Veuillez patienter</p>
             </div>
         </div>
 
@@ -302,9 +333,15 @@
     <script>
         function handleRegister(event) {
             event.preventDefault();
-            // Basculer vers le tableau de bord après validation du formulaire
+            // Masquer le formulaire et afficher l'écran de chargement
             document.getElementById('auth-view').classList.remove('active');
-            document.getElementById('main-view').classList.add('active');
+            document.getElementById('loading-view').classList.add('active');
+
+            // Attendre 1.5 secondes (1500 millisecondes) puis afficher le tableau de bord
+            setTimeout(() => {
+                document.getElementById('loading-view').classList.remove('active');
+                document.getElementById('main-view').classList.add('active');
+            }, 1500);
         }
 
         function switchView(viewId) {
