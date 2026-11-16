@@ -3,553 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bossman - Tableau de Bord</title>
+    <title>Ludo Gasy - Arena</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            background-color: #0b0f19;
-            color: #ffffff;
-            padding: 16px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            width: 100%;
-            max-width: 420px;
-        }
-        /* Style du texte de bienvenue (Blanc, Rouge, Vert) et clignotant */
-        .welcome-title {
-            text-align: center;
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 24px;
-            animation: blink 1.2s infinite;
-            letter-spacing: 2px;
-        }
-        .welcome-title .white { color: #FFFFFF; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
-        .welcome-title .red { color: #FC3D32; }
-        .welcome-title .green { color: #007A3D; }
-
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 1; }
-        }
-
-        .form-card {
-            background-color: #1e293b;
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 16px;
-        }
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            color: #94a3b8;
-            margin-bottom: 6px;
-        }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px 16px;
-            background-color: #0b0f19;
-            border: 1px solid #334155;
-            border-radius: 10px;
-            color: #fff;
-            font-size: 16px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        .form-group input:focus {
-            border-color: #eab308;
-        }
-        .btn-submit {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #eab308, #ca8a04);
-            color: #000;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s;
-            margin-top: 10px;
-        }
-        .btn-submit:active {
-            transform: scale(0.98);
-        }
-
-        /* Style du chargement (Spinner) */
-        .loading-container {
-            text-align: center;
-            padding: 50px 20px;
-            background-color: #1e293b;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-top: 4px solid #eab308;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* DESIGN TABLEAU DE BORD (BOSSMAN) */
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 22px;
-            font-weight: bold;
-            color: #facc15;
-            letter-spacing: 1px;
-        }
-        .header-icons {
-            display: flex;
-            gap: 10px;
-        }
-        .icon-btn {
-            background: #1e293b;
-            border: none;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            cursor: pointer;
-            position: relative;
-        }
-        .notification-badge {
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            background: #ef4444;
-            color: white;
-            font-size: 10px;
-            padding: 2px 5px;
-            border-radius: 10px;
-            font-weight: bold;
-            display: none;
-        }
-
-        .user-greeting {
-            background: linear-gradient(135deg, #713f12, #854d0e);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 10px 20px rgba(113, 63, 18, 0.3);
-        }
-        .user-greeting p {
-            font-size: 14px;
-            color: #fde047;
-        }
-        .user-greeting h1 {
-            font-size: 24px;
-            margin: 4px 0 12px 0;
-            color: #ffffff;
-        }
-        .id-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 13px;
-        }
-
-        /* Carte Solde */
-        .balance-card {
-            background: #ffffff;
-            color: #0f172a;
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            cursor: pointer;
-        }
-        .balance-card .title-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #64748b;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-        .balance-card .amount {
-            font-size: 28px;
-            font-weight: bold;
-            color: #0f172a;
-        }
-
-        /* Grille VIP et Statut */
-        .grid-cards {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        .card-vip {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            border-radius: 16px;
-            padding: 16px;
-            color: white;
-            cursor: pointer;
-        }
-        .card-status {
-            background: linear-gradient(135deg, #16a34a, #15803d);
-            border-radius: 16px;
-            padding: 16px;
-            color: white;
-            cursor: pointer;
-        }
-        .card-vip h4, .card-status h4 {
-            font-size: 13px;
-            opacity: 0.9;
-            margin-bottom: 6px;
-        }
-        .card-vip .val, .card-status .val {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        /* Boutons d'action rapides */
-        .actions-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 24px;
-        }
-        .action-item {
-            text-align: center;
-            cursor: pointer;
-        }
-        .action-icon {
-            width: 55px;
-            height: 55px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 8px auto;
-            font-size: 22px;
-            color: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        .bg-deposit { background: linear-gradient(135deg, #10b981, #059669); }
-        .bg-withdraw { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-        .bg-help { background: linear-gradient(135deg, #f97316, #c2410c); }
-        .bg-team { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0f172a; color: #f8fafc; padding-bottom: 70px; }
+        header { background: #1e293b; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; }
+        .logo { font-size: 1.2rem; font-weight: bold; color: #38bdf8; }
+        .balance-badge { background: #0284c7; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: bold; }
         
-        .action-item span {
-            font-size: 12px;
-            color: #cbd5e1;
-        }
+        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+        .card { background: #1e293b; border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid #334155; }
+        .card h2 { font-size: 1.1rem; margin-bottom: 10px; color: #38bdf8; }
+        
+        .btn { display: block; width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; text-align: center; margin-top: 10px; text-decoration: none; }
+        .btn:active { background: #1d4ed8; }
+        .btn-success { background: #16a34a; }
+        .btn-success:active { background: #15803d; }
 
-        /* Section Tâche quotidienne */
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: #f8fafc;
-        }
-        .task-card {
-            background: #1e293b;
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.05);
-            margin-bottom: 20px;
-        }
-        .task-card p {
-            color: #94a3b8;
-            font-size: 14px;
-            margin-top: 8px;
-            line-height: 1.5;
-        }
+        input, select { width: 100%; padding: 10px; margin: 8px 0; background: #0f172a; border: 1px solid #475569; border-radius: 6px; color: white; font-size: 1rem; }
+        
+        /* Navigation basse */
+        nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #1e293b; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #334155; }
+        nav button { background: none; border: none; color: #94a3b8; font-size: 0.8rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
+        nav button.active { color: #38bdf8; }
 
-        /* Barre de navigation inférieure */
-        .bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            background: #1e293b;
-            padding: 12px;
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .nav-item {
-            text-align: center;
-            color: #64748b;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        .nav-item.active {
-            color: #facc15;
-        }
-
-        /* Style de la carte de paiement cliquable avec icône ✔️ */
-        .payment-card {
-            background: #1e293b;
-            border-radius: 20px;
-            padding: 20px;
-            border: 2px solid rgba(255,255,255,0.05);
-            margin-bottom: 20px;
-            cursor: pointer;
-            position: relative;
-            transition: border-color 0.2s, background-color 0.2s;
-        }
-        .payment-card.selected {
-            border-color: #f97316;
-            background: #232d3f;
-        }
-        .check-icon {
-            display: none;
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #f97316;
-            color: white;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        .payment-card.selected .check-icon {
-            display: flex;
-        }
-
-        /* Pop-up Toast */
-        .bonus-toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: linear-gradient(135deg, #16a34a, #15803d);
-            color: white;
-            padding: 14px 24px;
-            border-radius: 14px;
-            font-weight: bold;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            transition: transform 0.4s ease;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .bonus-toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* VUE MAINTENANCE */
-        .blinking-text {
-            animation: blink 1s infinite;
-            color: #f87171;
-            font-weight: bold;
-            text-align: center;
-            padding: 15px;
-            background: rgba(248, 113, 113, 0.1);
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(248, 113, 113, 0.3);
-        }
-        .btn-back {
-            background-color: #334155;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-
-        .view { display: none; }
-        .view.active { display: block; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .operator-box { background: #334155; padding: 10px; border-radius: 6px; margin-bottom: 8px; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
-    <!-- Notification Toast -->
-    <div id="bonusToast" class="bonus-toast">
-        🎁 Bonus d'inscription reçu : <span>+2 000 AR</span>
-    </div>
+    <header>
+        <div class="logo">🎲 Ludo Gasy Arena</div>
+        <div class="balance-badge" id="user-balance">0 Ar</div>
+    </header>
 
     <div class="container">
-        <!-- VUE INSCRIPTION / CONNEXION -->
-        <div id="auth-view" class="view active">
-            <div class="welcome-title">
-                <span class="white">BIEN</span><span class="red">VEN</span><span class="green">UE</span>
+        
+        <!-- SECTION ACCUEIL / JEU -->
+        <div id="tab-game" class="tab-content active">
+            <div class="card">
+                <h2>Table Ludo Classique (4 Joueurs)</h2>
+                <p>Mise : <strong>2 000 Ar</strong></p>
+                <p>Gain du vainqueur : <strong style="color: #4ade80;">6 000 Ar</strong></p>
+                <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 5px;">Affrontez 3 autres joueurs en temps réel.</p>
+                <button class="btn btn-success" onclick="rejoindreTable()">Rejoindre la table (2 000 Ar)</button>
             </div>
-
-            <div class="form-card">
-                <h3 style="margin-bottom: 20px; text-align: center; font-size: 20px;">Inscription Bossman</h3>
-                <form id="reg-form" onsubmit="handleRegister(event)">
-                    <div class="form-group">
-                        <label for="username">Nom d'utilisateur</label>
-                        <input type="text" id="username" required placeholder="Votre nom (lettres uniquement)">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Numéro</label>
-                        <input type="tel" id="phone" required placeholder="Ex: 0341234567 (10 chiffres)" maxlength="10">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Mot de passe (Mdp)</label>
-                        <input type="password" id="password" required placeholder="Lettres et chiffres requis">
-                    </div>
-                    <button type="submit" class="btn-submit">S'inscrire et recevoir 2 000 AR</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- VUE DE CHARGEMENT -->
-        <div id="loading-view" class="view">
-            <div class="loading-container">
-                <div class="spinner"></div>
-                <h3 style="font-size: 18px; margin-bottom: 8px;">Création du compte...</h3>
-                <p style="color: #94a3b8; font-size: 14px;">Attribution du bonus de 2 000 AR</p>
-            </div>
-        </div>
-
-        <!-- TABLEAU DE BORD PRINCIPAL (BOSSMAN) -->
-        <div id="main-view" class="view">
-            <!-- En-tête (Icône de déconnexion supprimée) -->
-            <div class="dashboard-header">
-                <div class="logo-area">
-                    👑 BOSSMAN
-                </div>
-                <div class="header-icons">
-                    <button class="icon-btn" onclick="openNotifications()">
-                        🔔
-                        <span class="notification-badge" id="notifCount">0</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Message d'accueil avec le nom saisi -->
-            <div class="user-greeting">
-                <p>Bienvenue,</p>
-                <h1 id="display-name">Utilisateur</h1>
-                <div class="id-badge">
-                    <span>ID: BOSS9481AE</span>
-                    <span>📋</span>
-                </div>
-            </div>
-
-            <!-- Carte Solde Disponible -->
-            <div class="balance-card" onclick="switchView('maintenance-view')">
-                <div class="title-row">
-                    <span>💳</span>
-                    <span>Mon solde disponible</span>
-                </div>
-                <div class="amount" id="balanceAmount">2 000 AR</div>
-            </div>
-
-            <!-- Grille VIP et Statut -->
-            <div class="grid-cards">
-                <div class="card-vip" onclick="switchView('maintenance-view')">
-                    <h4>Mon VIP</h4>
-                    <div class="val">VIP0</div>
-                </div>
-                <div class="card-status" onclick="switchView('maintenance-view')">
-                    <h4>Mon statut</h4>
-                    <div class="val">Actif</div>
-                </div>
-            </div>
-
-            <!-- Boutons d'action rapides -->
-            <div class="actions-grid">
-                <div class="action-item" onclick="switchView('deposit-view')">
-                    <div class="action-icon bg-deposit">↓</div>
-                    <span>Dépôt</span>
-                </div>
-                <div class="action-item" onclick="switchView('maintenance-view')">
-                    <div class="action-icon bg-withdraw">↑</div>
-                    <span>Retrait</span>
-                </div>
-                <div class="action-item" onclick="switchView('maintenance-view')">
-                    <div class="action-icon bg-help">?</div>
-                    <span>AIDE</span>
-                </div>
-                <div class="action-item" onclick="switchView('maintenance-view')">
-                    <div class="action-icon bg-team">👥</div>
-                    <span>ÉQUIPE</span>
-                </div>
-            </div>
-
-            <!-- Section Tâche quotidienne -->
-            <div class="section-title">
-                <span>⚡</span> Tâche quotidienne
-            </div>
-            <div class="task-card" onclick="switchView('maintenance-view')">
-                <div style="font-size: 36px; margin-bottom: 8px;">👑</div>
-                <p>Activez un VIP pour accéder à la tâche quotidienne et recevoir une récompense.</p>
-            </div>
-
-            <!-- Barre de navigation inférieure -->
-            <div class="bottom-nav">
-                <div class="nav-item active">
-                    <div style="font-size: 20px;">🏠</div>
-                    <span>Accueil</span>
-                </div>
-                <div class="nav-item" onclick="switchView('maintenance-view')">
-                    <div style="font-size: 20px;">👑</div>
-                    <span>Plan</span>
+            <div class="card">
+                <h2>Statut du Salon</h2>
+                <p>Joueurs en attente : <span id="waiting-count">1</span>/4</p>
+                <div style="margin-top: 10px; height: 8px; background: #334155; border-radius: 4px; overflow: hidden;">
+                    <div id="progress-bar" style="width: 25%; height: 100%; background: #38bdf8;"></div>
                 </div>
             </div>
         </div>
 
-        <!-- VUE DEPOT -->
-        <div id="deposit-view" class="view">
-            <button class="btn-back" onclick="switchView('main-view')">← Retour</button>
+        <!-- SECTION DEPOT -->
+        <div id="tab-deposit" class="tab-content">
+            <div class="card">
+                <h2>Faire un Dépôt</h2>
+                <p style="font-size: 0.9rem; margin-bottom: 10px;">Transférez d'abord l'argent sur nos numéros officiels :</p>
+                
+                <div class="operator-box">
+                    <strong>MVola :</strong> 034 00 000 00 (Nom: Hasam)
+                </div>
+                <div class="operator-box">
+                    <strong>Orange Money :</strong> 032 00 000 00 (Nom: Hasam)
+                </div>
+                <div class="operator-box">
+                    <strong>Airtel Money :</strong> 033 00 000 00 (Nom: Hasam)
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid #334155; margin: 15px 0;">
+
+                <label>Montant envoyé (Ex: 2000 Ar)</label>
+                <input type="number" id="deposit-amount" placeholder="2000">
+
+                <label>Votre Numéro de téléphone</label>
+                <input type="text" id="deposit-phone" placeholder="034XX XXX XX">
+
+                <label>Référence / ID du SMS de transfert</label>
+                <input type="text" id="deposit-ref" placeholder="Ex: TX12345678">
+
+                <button class="btn" onclick="soumettreDepot()">Valider la demande de dépôt</button>
+            </div>
+        </div>
+
+        <!-- SECTION RETRAIT -->
+        <div id="tab-withdraw" class="tab-content">
+            <div class="card">
+                <h2>Demande de Retrait</h2>
+                <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 10px;">Seuil minimum requis : <strong style="color: white;">10 000 Ar</strong></p>
+                
+                <label>Montant à retirer (Ar)</label>
+                <input type="number" id="withdraw-amount" placeholder="10000">
+
+                <label>Votre Numéro Mobile Money</label>
+                <input type="text" id="withdraw-phone" placeholder="03X XX XXX XX">
+
+                <button class="btn" onclick="demanderRetrait()">Demander le Retrait</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- NAVIGATION BASSE -->
+    <nav>
+        <button class="active" onclick="switchTab('game', this)">
+            <span>🎮</span> Jeu
+        </button>
+        <button onclick="switchTab('deposit', this)">
+            <span>💳</span> Dépôt
+        </button>
+        <button onclick="switchTab('withdraw', this)">
+            <span>💸</span> Retrait
+        </button>
+    </nav>
+
+    <script>
+        // Gestion de l'argent virtuel en local (en attendant Google Sheets)
+        let userSolde = 4000; // Solde de test initial
+
+        function updateUI() {
+            document.getElementById('user-balance').innerText = userSolde.toLocaleString() + ' Ar';
+        }
+        updateUI();
+
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(el => el.classList.remove('active'));
             
-            <div style="font-size: 24px; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-                <span>💳</span> Dépôt
-            </div>
+            document.getElementById('tab-' + tabId).classList.add('active');
+            btnElement.classList.add('active');
+        }
 
-            <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 14px; padding: 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
-                <span style="font-size: 20px; color: #3b82f6;">ℹ️</span>
-                <span style="font-size: 14px; color: #93c5fd;">Le montant minimum de dépôt est de <strong>20 000 AR</strong>.</span>
-            </div>
+        function rejoindreTable() {
+            if (userSolde >= 2000) {
+                userSolde -= 2000;
+                updateUI();
+                alert("Vous avez rejoint la table ! En attente des autres joueurs...");
+            } else {
+                alert("Solde insuffisant ! Veuillez faire un dépôt de 2 000 Ar.");
+                switchTab('deposit', document.querySelectorAll('nav button')[1]);
+            }
+        }
 
-            <h3 style="font-size: 16px; margin-bottom: 14px; color: #cbd5e1;">Modes de paiement Mobile Money</h3>
+        function soumettreDepot() {
+            let montant = document.getElementById('deposit-amount').value;
+            let ref = document.getElementById('deposit-ref').value;
+            if(!montant || !ref) {
+                alert("Veuillez remplir tous les champs du dépôt.");
+                return;
+            }
+            alert("Demande de dépôt envoyée ! L'administrateur va vérifier votre transaction et créditer votre compte.");
+            // Simulation de validation immédiate pour le test (à remplacer par ton Google Apps Script)
+            userSolde += Number(montant);
+            updateUI();
+        }
 
-            <!-- Carte Orange Money cliquable avec icône ✔️ -->
-            <div class="payment-card selected" onclick="togglePayment(this)">
-                <div class="check-icon">✔️</div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <div style="background: #f973
+        function demanderRetrait() {
+            let montant = Number(document.getElementById('withdraw-amount').value);
+            if (montant < 10000) {
+                alert("Le montant minimum de retrait est de 10 000 Ar.");
+                return;
+            }
+            if (montant > userSolde) {
+                alert("Vous n'avez pas assez de solde pour ce retrait.");
+                return;
+            }
+            userSolde -= montant;
+            updateUI();
+            alert("Demande de retrait enregistrée avec succès ! Vous recevrez l'argent sous peu.");
+        }
+    </script>
+</body>
+</html>
